@@ -28,7 +28,7 @@ app.users = (obj) => {
 };
 
 /**
- *
+ * 获取菜单列表
  * @param key
  * @param unionid
  */
