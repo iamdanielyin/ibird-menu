@@ -1,6 +1,6 @@
 {
   "name": "ibird-menu",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "The menu module of ibird.",
   "main": "index.js",
   "repository": {
