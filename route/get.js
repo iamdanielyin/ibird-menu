@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * 内置路由：刷新令牌
+ * 内置路由：获取菜单列表
  * Created by yinfxs on 2017/4/19.
  */
 
