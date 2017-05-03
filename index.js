@@ -33,7 +33,11 @@ app.users = (obj) => {
  * @param unionid
  */
 app.get = (key, unionid) => {
-    if (typeof cache.users !== 'object') return {};
-    if (typeof cache.users[unionid] !== 'object') return {};
+    if (unionid) {
+        if (typeof cache.users !== 'object') return {};
+        if (typeof cache.users[unionid] !== 'object') return {};
+    }
+    const split = key.split('.');
+    key = (split.length > 1) ? split.join('.children.') : key;
     return unionid ? _.get(cache.users[unionid], key, {}) : _.get(cache.menus, key, {});
 };
