@@ -19,9 +19,10 @@ app.config = (config, obj) => {
     if (typeof config !== 'object' && typeof obj !== 'object') return;
     const result = {};
     if (!obj) {
-        for (const code in config.schema) {
+        for (let code in config.schema) {
             let s = config.schema[code];
             if (s === null || (typeof s !== 'object')) continue;
+            code = code.toLowerCase();
             result[code] = {
                 code: code,
                 name: s.displayName || code,
