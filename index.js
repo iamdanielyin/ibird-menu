@@ -12,10 +12,10 @@ module.exports = app;
 const cache = { menus: {}, users: {} };
 /**
  * 菜单初始化配置
- * @param obj 配置对象
  * @param config ibird配置对象
+ * @param obj 配置对象
  */
-app.config = (obj, config) => {
+app.config = (config, obj) => {
     if (typeof config !== 'object' && typeof obj !== 'object') return;
     const result = {};
     if (!obj) {
@@ -49,12 +49,14 @@ app.users = (obj) => {
  * @param key
  * @param unionid
  */
-app.get = (key, unionid) => {
-    if (unionid) {
-        if (typeof cache.users !== 'object') return {};
-        if (typeof cache.users[unionid] !== 'object') return {};
-    }
+app.get = (key = '', unionid) => {
     const split = key.split('.');
     key = (split.length > 1) ? split.join('.children.') : key;
-    return unionid ? _.get(cache.users[unionid], key, {}) : _.get(cache.menus, key, {});
+    if (unionid && Object.keys(cache.users).length > 0) {
+        if (typeof cache.users !== 'object') return {};
+        if (typeof cache.users[unionid] !== 'object') return {};
+        return key ? _.get(cache.users[unionid], key, {}) : cache.users[unionid];
+    } else {
+        return key ? _.get(cache.menus, key, {}) : cache.menus;
+    }
 };

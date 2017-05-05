@@ -91,7 +91,7 @@ const menu = require('ibird-menu');
 
 ```js
 // 传入菜单列表
-menu.config({
+menu.config(null, {
     "menu1": {
         "code": "menu1",
         "name": "菜单1",
@@ -140,7 +140,7 @@ menu.config({
 
 // 根据ibird配置对象自动生成
 const app = require('ibird-core');
-menu.config(null, app.config());
+menu.config(app.config());
 ```
 
 ### 配置用户菜单
