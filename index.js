@@ -13,10 +13,27 @@ const cache = { menus: {}, users: {} };
 /**
  * 菜单初始化配置
  * @param obj 配置对象
+ * @param config ibird配置对象
  */
-app.config = (obj) => {
-    if (!obj || typeof obj !== 'object') return;
-    cache.menus = obj;
+app.config = (obj, config) => {
+    if (typeof config !== 'object' && typeof obj !== 'object') return;
+    const result = {};
+    if (!obj) {
+        for (const code in config.schema) {
+            let s = config.schema[code];
+            if (s === null || (typeof s !== 'object')) continue;
+            result[code] = {
+                code: code,
+                name: s.displayName || code,
+                icon: 'file',
+                uri: `/${code}`
+            };
+        }
+    } else {
+        Object.assign(result, obj);
+    }
+    cache.menus = result;
+    return result;
 };
 /**
  * 用户菜单初始化配置

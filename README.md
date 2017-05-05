@@ -22,6 +22,7 @@ const menu = require('ibird-menu');
 // 结构
 {
     "菜单编码": {
+        "code": "菜单编码，与key相同，属于冗余设计字段",
         "name": "菜单名称",
         "icon": "菜单图标",
         "uri": "菜单链接地址，与children互斥，当设置children时，该项设置会被忽略",
@@ -32,15 +33,18 @@ const menu = require('ibird-menu');
 // 示例
 {
   "menu1": {
+    "code": "menu1",
     "name": "菜单1",
     "icon": "circle",
     "children": {
       "menu1-1": {
+        "code": "menu1-1",
         "name": "菜单1-1",
         "icon": "fa-circle",
         "uri": "/dashboard/home/m1_1"
       },
       "menu1-2": {
+        "code": "menu1-2",
         "name": "菜单1-2",
         "icon": "fa-circle",
         "uri": "/dashboard/home/m1_2"
@@ -48,15 +52,18 @@ const menu = require('ibird-menu');
     }
   },
   "menu2": {
+    "code": "menu2",
     "name": "菜单2",
     "icon": "circle",
     "children": {
       "menu2-1": {
+        "code": "menu2-1",
         "name": "菜单2-1",
         "icon": "fa-circle",
         "uri": "/dashboard/home/m2_1"
       },
       "menu2-2": {
+        "code": "menu2-2",
         "name": "菜单2-2",
         "icon": "fa-circle",
         "uri": "/dashboard/home/m2_2"
@@ -64,9 +71,10 @@ const menu = require('ibird-menu');
     }
   },
   "menu3": {
-    "name": "菜单4",
+    "code": "menu3",
+    "name": "菜单3",
     "icon": "fa-circle",
-    "uri": "/dashboard/home/m4"
+    "uri": "/dashboard/home/m3"
   }
 }
 ```
@@ -85,15 +93,18 @@ const menu = require('ibird-menu');
 // 传入菜单列表
 menu.config({
     "menu1": {
+        "code": "menu1",
         "name": "菜单1",
         "icon": "circle",
         "children": {
             "menu1-1": {
+                "code": "menu1-1",
                 "name": "菜单1-1",
                 "icon": "fa-circle",
                 "uri": "/dashboard/home/m1_1"
             },
             "menu1-2": {
+                "code": "menu1-2",
                 "name": "菜单1-2",
                 "icon": "fa-circle",
                 "uri": "/dashboard/home/m1_2"
@@ -101,15 +112,18 @@ menu.config({
         }
     },
     "menu2": {
+        "code": "menu2",
         "name": "菜单2",
         "icon": "circle",
         "children": {
             "menu2-1": {
+                "code": "menu2-1",
                 "name": "菜单2-1",
                 "icon": "fa-circle",
                 "uri": "/dashboard/home/m2_1"
             },
             "menu2-2": {
+                "code": "menu2-2",
                 "name": "菜单2-2",
                 "icon": "fa-circle",
                 "uri": "/dashboard/home/m2_2"
@@ -117,11 +131,16 @@ menu.config({
         }
     },
     "menu3": {
-        "name": "菜单4",
+        "code": "menu3",
+        "name": "菜单3",
         "icon": "fa-circle",
-        "uri": "/dashboard/home/m4"
+        "uri": "/dashboard/home/m3"
     }
 });
+
+// 根据ibird配置对象自动生成
+const app = require('ibird-core');
+menu.config(null, app.config());
 ```
 
 ### 配置用户菜单
@@ -132,10 +151,12 @@ menu.config({
 menu.users({
     "zhangsan": {
         "menu1": {
+            "code": "menu1",
             "name": "菜单1",
             "icon": "circle",
             "children": {
                 "menu1-1": {
+                    "code": "menu1-1",
                     "name": "菜单1-1",
                     "icon": "fa-circle",
                     "uri": "/dashboard/home/m1_1"
@@ -143,24 +164,28 @@ menu.users({
             }
         },
         "menu3": {
-            "name": "菜单4",
+            "code": "menu3",
+            "name": "菜单3",
             "icon": "fa-circle",
-            "uri": "/dashboard/home/m4"
+            "uri": "/dashboard/home/m3"
         }
     },
     "lisi": {
         "menu3": {
-            "name": "菜单4",
+            "code": "menu3",
+            "name": "菜单3",
             "icon": "fa-circle",
-            "uri": "/dashboard/home/m4"
+            "uri": "/dashboard/home/m3"
         }
     },
     "wangwu": {
         "menu1": {
+            "code": "menu1",
             "name": "菜单1",
             "icon": "circle",
             "children": {
                 "menu1-2": {
+                    "code": "menu1-2",
                     "name": "菜单1-2",
                     "icon": "fa-circle",
                     "uri": "/dashboard/home/m1_2"
@@ -168,10 +193,12 @@ menu.users({
             }
         },
         "menu2": {
+            "code": "menu2",
             "name": "菜单2",
             "icon": "circle",
             "children": {
                 "menu2-2": {
+                    "code": "menu2-2",
                     "name": "菜单2-2",
                     "icon": "fa-circle",
                     "uri": "/dashboard/home/m2_2"
@@ -179,9 +206,10 @@ menu.users({
             }
         },
         "menu3": {
-            "name": "菜单4",
+            "code": "menu3",
+            "name": "菜单3",
             "icon": "fa-circle",
-            "uri": "/dashboard/home/m4"
+            "uri": "/dashboard/home/m3"
         }
     }
 });
@@ -201,6 +229,24 @@ menu.get("menu1", "zhangsan"); // 只返回zhangsan的menu1下及menu1下所有�
 menu.get("menu1.menu1_2"); // 返回指定层级下的菜单列表
 menu.get("menu1.menu1_2.menu1_2_1", "zhangsan"); // 返回zhangsan指定层级下的菜单列表
 ```
+
+## 外部路由
+
+菜单模块提供一个内置路由方便开发者使用：
+
+```js
+// 导出内置菜单路由
+const get = require('ibird-menu/route/get');
+
+// 可以直接挂载到ibird中
+const app = require('ibird-core');
+app.mount(get);
+
+// 也可以自行挂载到koa-router中
+router.post('/menu', get.middleware);
+```
+
+> Tips：该接口的请求方式是GET，接收两个参数：key和userid，对应内置接口的两个参数。如果是使用`ibird-token`在浏览器登录，可以省略userid参数。
 
 
 
