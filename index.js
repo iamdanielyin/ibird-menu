@@ -6,6 +6,7 @@
  */
 
 const _ = require('lodash');
+const getRoute = require('./route/get');
 const app = {};
 module.exports = app;
 
@@ -59,4 +60,12 @@ app.get = (key = '', unionid) => {
     } else {
         return key ? _.get(cache.menus, key, {}) : cache.menus;
     }
+};
+
+/**
+ * 导出内置路由
+ * @param app
+ */
+app.route = (router) => {
+    router.get('/menu', getRoute);
 };
