@@ -6,7 +6,6 @@
  */
 
 const _ = require('lodash');
-const getRoute = require('./route/get');
 const app = {};
 module.exports = app;
 
@@ -67,5 +66,5 @@ app.get = (key = '', unionid) => {
  * @param app
  */
 app.route = (router) => {
-    router.get('/menu', getRoute);
+    router.get('/menu', require('./route/get'));
 };
